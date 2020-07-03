@@ -1,14 +1,4 @@
-const koaAwaitBreakpoint = require('koa-await-breakpoint')({
-  name: 'api',
-  files: ['./routes/*.js'],
-  store: require('./tools/logger'),
-  requestIdPath: 'traceId',
-  filter: {
-    ctx: ['state', 'params'],
-    request: ['method', 'path', 'header', 'query', 'body'],
-    response: ['status', 'body'],
-  },
-});
+const KoaAwaitBreakpoint = require('koa-await-breakpoint');
 
 const Koa = require('koa');
 const parser = require('koa-body');
@@ -18,7 +8,19 @@ require('./lib/db');
 
 const app = new Koa();
 app.use(parser());
-app.use(koaAwaitBreakpoint);
+app.use(
+  KoaAwaitBreakpoint({
+    name: 'api',
+    files: ['./routes/*.js'],
+    store: require('./tools/logger'),
+    requestIdPath: 'traceId',
+    filter: {
+      ctx: ['state', 'params'],
+      request: ['method', 'path', 'header', 'query', 'body'],
+      response: ['status', 'body'],
+    },
+  })
+);
 app.use(userRouter.routes());
 app.listen(3000, () => {
   console.log('service sussess');

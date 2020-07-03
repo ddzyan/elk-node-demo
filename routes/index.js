@@ -3,7 +3,7 @@ const Router = require('@koa/router');
 const UserModel = require('../model/user');
 
 const userRouter = new Router({
-  prefix: '/user',
+  //prefix: '/user',
 });
 
 async function createUser(name, age) {

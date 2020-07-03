@@ -19,3 +19,8 @@
 4. 执行 await 表达式所花费的毫秒（take）。
 5. 执行 await 表达式的结果（result）。
 6. 当前请求的 ctx。
+
+branch
+
+1. master : 采用 logstash 完成日志上传到 elasticsearch
+2. apm : 日志上传到 apm-server

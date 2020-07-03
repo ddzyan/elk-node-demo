@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { model } = require('../mongodb/db');
+const { model } = require('../lib/db');
 
 const Schema = mongoose.Schema;
 

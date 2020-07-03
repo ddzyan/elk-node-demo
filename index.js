@@ -11,16 +11,15 @@ const koaAwaitBreakpoint = require('koa-await-breakpoint')({
 });
 
 const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
+const parser = require('koa-body');
 
-const routes = require('./routes');
-const db = require('./mongodb/db');
+const userRouter = require('./routes');
+require('./lib/db');
 
 const app = new Koa();
-app.use(bodyParser());
-// Generally, above other middlewares
+app.use(parser());
 app.use(koaAwaitBreakpoint);
-routes(app);
+app.use(userRouter.routes());
 app.listen(3000, () => {
   console.log('service sussess');
 });

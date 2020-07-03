@@ -1,4 +1,10 @@
+const Router = require('@koa/router');
+
 const UserModel = require('../model/user');
+
+const userRouter = new Router({
+  prefix: '/user',
+});
 
 async function createUser(name, age) {
   const user = await UserModel.create({
@@ -8,14 +14,13 @@ async function createUser(name, age) {
   return user;
 }
 
-module.exports = function (app) {
-  app.use(async (ctx) => {
-    ctx.body = 'hello word';
-    const name = ctx.body.name || '张飞';
-    const age = ctx.body.age || 12;
-    const res = await createUser(name, age);
-    return res;
-  });
+userRouter.post('/add', async (ctx, next) => {
+  const { name = '张飞', age = 12 } = ctx.request.body;
+  if (typeof age !== 'number') {
+    throw new TypeError('id type must bu number');
+  }
+  const res = await createUser(name, age);
+  ctx.body = res;
+});
 
-  return app;
-};
+module.exports = userRouter;

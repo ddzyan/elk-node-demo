@@ -1,0 +1,19 @@
+{
+  "name": "node-debugger",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "config-lite": "^3.0.0",
+    "koa": "^2.13.0",
+    "koa-await-breakpoint": "^1.1.0",
+    "koa-bodyparser": "^4.3.0",
+    "log4js": "^6.3.0",
+    "logstash-client": "^1.1.1",
+    "mongoose": "^5.9.21"
+  },
+  "scripts": {
+    "start": "NODE_ENV=dev DEBUG=koa-await-breakpoint node index.js"
+  }
+}

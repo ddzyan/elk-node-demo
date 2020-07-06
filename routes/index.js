@@ -16,13 +16,21 @@ async function createUser(name, age) {
 }
 
 userRouter.post('/add', async (ctx, next) => {
-  apm.setTransactionName('get /add');
-  const { name = '张飞', age = 12 } = ctx.request.body;
-  if (typeof age !== 'number') {
-    throw new TypeError('id type must bu number');
+  try {
+    apm.setTransactionName('POST /add');
+    const { name = '张飞', age = 12 } = ctx.request.body;
+    if (typeof age !== 'number') {
+      throw new TypeError('id type must bu number');
+    }
+    const res = await createUser(name, age);
+    ctx.status = 200;
+    ctx.body = res;
+  } catch (error) {
+    apm.captureError(error);
+    ctx.status = 500;
+    ctx.body = error.message;
   }
-  const res = await createUser(name, age);
-  ctx.body = res;
+ 
 });
 
 module.exports = userRouter;

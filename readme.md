@@ -24,3 +24,56 @@ branch
 
 1. master : 采用 logstash 完成日志上传到 elasticsearch
 2. apm : 日志上传到 apm-server
+
+
+#### ELK+APM环境搭建
+
+ELK
+```shell
+git clone https://github.com/deviantony/docker-elk.git
+
+cd docker-elk
+
+docker-compose up -d
+```
+
+apm
+```
+cd /opt
+
+wget https://artifacts.elastic.co/downloads/apm-server/apm-server-7.8.0-linux-x86_64.tar.gz
+
+gunzip  apm-server-7.8.0-linux-x86_64.tar.gz
+
+tar -xf apm-server-7.8.0-linux-x86_64.tar.gz
+
+mv  apm-server-7.8.0-linux-x86_64.tar.gz apm-server
+
+cd apm-server
+
+```
+
+修改apm配置文件
+```shell
+vim apm-server.yml
+[apm-server.yml]
+apm-server:
+  host: "0.0.0.0:8200"
+kibana:
+  enabled: true
+  host: "localhost:5601"
+
+  protocol: "http"
+  username: "elastic"
+  password: "changeme"
+
+
+output.elasticsearch:
+  hosts: ["localhost:9200"]
+  username: "elastic"
+  password: "changeme"
+``` 
+
+```shell
+./apm-server -e
+```

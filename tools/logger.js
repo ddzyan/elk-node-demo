@@ -7,6 +7,7 @@ module.exports = {
       log.errStack = log.error.stack;
     }
     const { method, path } = log.this.request;
+    console.log(method, path);
     apm.setTransactionName(`${method} ${path}`);
   },
 };

@@ -1,5 +1,6 @@
 const Router = require('@koa/router');
 
+const apm = require('../lib/apm')();
 const UserModel = require('../model/user');
 
 const userRouter = new Router({
@@ -15,6 +16,7 @@ async function createUser(name, age) {
 }
 
 userRouter.post('/add', async (ctx, next) => {
+  apm.setTransactionName('get /add');
   const { name = '张飞', age = 12 } = ctx.request.body;
   if (typeof age !== 'number') {
     throw new TypeError('id type must bu number');

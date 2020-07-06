@@ -13,7 +13,6 @@ app.use(
     name: 'api',
     files: ['./routes/*.js'],
     store: require('./tools/logger'),
-    requestIdPath: 'traceId',
     filter: {
       ctx: ['state', 'params'],
       request: ['method', 'path', 'header', 'query', 'body'],

@@ -24,3 +24,22 @@ branch
 
 1. master : 采用 logstash 完成日志上传到 elasticsearch
 2. apm : 日志上传到 apm-server
+
+#### ELK 环境搭建
+
+```
+docker run -p 5601:5601 \
+    -p 9200:9200 \
+    -p 5044:5044 \
+    -p 15044:15044/udp \
+    -it --name elk sebp/elk
+```
+
+```
+# 进入容器，修改配置
+docker exec -it elk /bin/bash
+
+# 运行以下命令设置 logstash 的 input 和 output：
+/opt/logstash/bin/logstash --path.data /tmp/logstash/data \
+  -e 'input { udp { codec => "json" port => 15044 } } output { elasticsearch { hosts => ["localhost"] } }'
+```

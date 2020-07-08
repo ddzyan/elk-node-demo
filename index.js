@@ -1,8 +1,8 @@
 // apm模块必须在koa模块引起前进行实例化，否则会报错
-require('./lib/apm')()
+require('./lib/apm')();
 
 const Koa = require('koa');
-const parser = require('koa-body');
+const parser = require('koa-bodyparser');
 
 const userRouter = require('./routes');
 require('./lib/db');
